@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+        <title>Hello World</title>
+        
+    </head>
+
+    <body>
+        <div class="jumbotron">
+            <h1 id="month-title" class="display-4"></h1>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">New Meeting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="http://127.0.0.1:5000/addData" method="POST" role="form" onsubmit="popupAlert()">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" name="name" placeholder="Enter a name for this metting" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" name="description" placeholder="Enter a description for this meeting">
+                            </div>
+                            <div class="form-group">
+                                <label for="time">Time</label>
+                                <input id="time-input" type="time" class="form-control" name="time" value="">
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Date</label>
+                                <input id="date-input" type="date" class="form-control" name="date" id="date" value="">
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" class=" btn btn-primary">Create a new meeting</button>
+                            </div>
+                           
+                            
+                        </form>
+                    </div>
+                </div>
+                </div>
+        </div>
+
+
+
+
+        <div class="row">
+                <div class="col-1"><button onclick="prevMonth()">Previous</button></div>
+                <div id="table" class="col-10">
+                    <table class="table" id="calendar">
+                        <thread>
+                            <tr>
+                                <th style="width: 10%">Sunday</th>
+                                <th style="width: 10%">Monday</th>
+                                <th style="width: 10%">Tuesday</th>
+                                <th style="width: 10%">Wednesday</th>
+                                <th style="width: 10%">Thursday</th>
+                                <th style="width: 10%">Friday</th>
+                                <th style="width: 10%">Saturday</th>
+                            </tr>
+                        </thread>
+                        <tbody id="calendar-body"></tbody>
+                    </table>
+                </div>
+                <div class="col-1"><button onclick="nextMonth()">Next</button></div>
+
+       
+        </div>
+        <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>   
+        <script src="calendardates.js" type="text/javascript"></script>
+
+        <script>
+            var date = new Date();
+            var currentYear = date.getFullYear();
+            var currentMonth = date.getMonth() + 1;
+            console.log(currentYear, currentMonth);
+
+            function nextMonth()  {
+                currentMonth = currentMonth + 1;
+                $('#calendar-body').html(createMonth(currentMonth));
+                $('#month-title').html(getFullMonthName(currentMonth) + ' 2019');
+            }
+
+            function prevMonth()  {
+                
+                currentMonth = currentMonth - 1;
+                $('#calendar-body').html(createMonth(currentMonth));
+                $('#month-title').html(getFullMonthName(currentMonth) + ' 2019');
+            }
+
+            function setUpModal (clickedDate) {
+                clickedStrDate = clickedDate
+                clickedStrMoneth = clickedDate
+                if (parseInt(clickedDate) < 10)  {
+                    clickedStrDate = "0" + clickedDate
+                }
+                if (parseInt(currentMonth) < 10)  {
+                    currentStrMonth = "0" + currentMonth
+                }
+                dateString = date.getFullYear() + "-" + currentStrMonth + "-" + clickedStrDate
+                hour = date.getHours();
+                mintue = date.getMinutes();
+                console.log(hour,  mintue);
+                $("#date-input").attr("value", dateString);
+                $("#time-input").attr("value", hour + ":" + mintue);
+            }
+
+        
+            $('#calendar-body').append(createMonth(currentMonth));
+            $('#month-title').html(getFullMonthName(currentMonth) + ' 2019');
+                
+        </script>
+
+    </body>
+</html>
