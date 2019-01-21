@@ -56,7 +56,7 @@ function createDays(numDays)  {
     for (var i = 1; i < numDays + 1; i++) {
         var td = document.createElement('td');
         var button = document.createElement('button');
-        button.setAttribute('class', 'btn btn-primary');
+        button.setAttribute('class', 'btn btn-primary date-button');
         button.setAttribute('data-toggle', 'modal');
         button.setAttribute('data-target', '#exampleModal');
         button.setAttribute('onclick', 'setUpModal(' + i  +')');

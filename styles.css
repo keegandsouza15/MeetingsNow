@@ -1,0 +1,37 @@
+body{
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+   
+}
+
+.date-button{
+    background: rgba(79, 95, 168, 0.068);
+    text-align: center;
+    font-size: 15px;
+    color: black;
+    border: none;
+    width: 80px;
+    height: 80px;
+}
+
+.tr-weekdays{
+    background: rgba(63, 34, 34, 0.034);
+    font-size: 15px;
+}
+
+.month-title {
+    display: table-cell;
+    text-align: center;
+    height: 200px;
+}
+
+.h1-month-title {
+    padding-top: 3%;
+    padding-bottom: 3%;
+    text-align: center;
+}
+
+.navigation-arrow {
+    background: white;
+    font-size: 40px;
+    color: black
+   }
