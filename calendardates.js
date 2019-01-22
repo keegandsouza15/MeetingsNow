@@ -84,35 +84,7 @@ function findStartingDay (month)  {
     return calculation;
 }
 
-function createMonth (monthNumber)  {
-    rows = []
-    
-    startingDay = findStartingDay(monthNumber) - 1;
-    var days = createDays(monthDays[monthNumber-1]);
 
-    var tr = document.createElement('tr');
-    for (var i = 1; i < startingDay + 1; i++)  {
-        var td = document.createElement('td');
-        var button = document.createElement('button');
-        button.setAttribute('hidden', 'true');
-        button.setAttribute('class', 'btn btn-secondary');
-        button.setAttribute('data-toggle', 'modal');
-        button.setAttribute('data-target', '#exampleModal');
-        $(button).html('X');
-        td.appendChild(button);
-        tr.appendChild(td);
-    }
-    console.log(days.length)
-    for (var i = startingDay, j = 0; j < days.length; i++, j++) {
-        if (i % 7 == 0)  {
-           rows.push(tr);
-           var tr = document.createElement('tr');
-        }
-        tr.appendChild(days[j]);
-    }
-    rows.push(tr);
-    return rows;
-}
 
 
 function createRow(startingDay)  {
@@ -127,6 +99,3 @@ function createRow(startingDay)  {
 
 
 
-function alertTest()  {
-    alert("im here from calendardates.js")
-}
