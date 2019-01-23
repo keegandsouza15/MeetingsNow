@@ -12,10 +12,10 @@
     </head>
 
     <body class="text-center">
-        <h1 class="display-4" id="name-text"></h1>
-        <p id="description-text"></p>
-        <p id="date-text"></p>
-        <p id="time-text"></p>
+        <h1 style="font-size:100px; padding: 100px" class="display-4" id="name-text"></h1>
+        <h2 style="padding: 25px" id="description-text"></h2>
+        <h2 style="padding: 25px" id="date-text"></h2>
+        <h2 style="padding: 25px" id="time-text"></h2>
 
         <div class="row">
             <div class="col-4"></div>
@@ -41,10 +41,34 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>   
 
         <script>
+             function convertMilitarytoStandard(time) {
+                console.log(time)
+            
+                digits = time.slice(0,2);
+                if (parseInt(digits) >= 12) {
+                    convertedDigits = parseInt(digits) - 12 ;
+                    if (convertedDigits == 0)  {
+                        convertedDigits = 12;
+                    }
+
+                    return convertedDigits + time.slice(2, time.length) + " p.m.";
+
+                }
+                else {
+                    if (parseInt(digits) == 0)  {
+                        return "12" + time.slice(2, time.length) + " a.m.";
+
+                    }
+
+                    return time + " a.m";
+                }
+            }
+
             const urlParams = new URLSearchParams(window.location.search);
             $('#name-text').html(urlParams.get('name')); 
             $('#description-text').html(urlParams.get('description'));
-            $('#time-text').html(urlParams.get('time'));
+            var time = urlParams.get('time')
+            $('#time-text').html(convertMilitarytoStandard(time));
             dateString = urlParams.get('date');
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             date = new Date(dateString);
@@ -59,9 +83,13 @@
                     type: "POST",
                     success: function(result) {
                         alert("Your email was sent");
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        alert("Your email was not sent");
                     }
                 })
-                    
+
+           
                 
             }
 

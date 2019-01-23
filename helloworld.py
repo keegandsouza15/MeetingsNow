@@ -4,7 +4,7 @@ from email.message import EmailMessage
 import urllib.parse as urlparse
 from urllib.parse import urlencode
 
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, abort
 app = Flask(__name__)
  
 URL = "http://127.0.0.1:5500/"
@@ -45,12 +45,6 @@ def add_meeting():
 
 @app.route('/email', methods = ['POST'])
 def email_stuff():
-    print("im here")
-    me = "keegan0415dsouza@gmail.com"
-    you = "keegan0415dsouza@gmail.com"
-
-    s = smtplib.SMTP('localhost')
-    s.send_message("Hello There")
-    s.quit()
-    return True
+    return abort(404)
+    
 
