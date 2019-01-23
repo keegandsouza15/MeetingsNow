@@ -5,25 +5,51 @@ import urllib.parse as urlparse
 from urllib.parse import urlencode
 
 from flask import Flask, request, redirect, abort
+from emailer import sendTestEmail
+
 app = Flask(__name__)
  
 URL = "http://127.0.0.1:5500/"
 INVITATION_PATH = "invitation.html"
 
+
+class post:
+    def __init(self, text):
+        self.text = text
+        self.votes = 0
+
+    def increaseVote(self):
+        self.votes += 1
+    
+    def decreaseVote(self):
+        self.votes -=1 
+
+class chat:
+    def __init__(self):
+        self.posts = []
+    
+    def add_post(self, post):
+        self.posts.append(post)
+
+    def get_ordered_post(self, post):
+        return self.posts
+
 class meeting:
-    def __init__(self, name, date, description):
+    def __init__(self, name, date, time, description):
         self.name = name
         self.date = date
+        self.time = time
+        self.place = ""
         self.description = description
-
+    
     def get_url(self):
-        params = {'name': self.name, 'date' : self.date , 'description' : self.description}
+        params = {'name': self.name, 'date' : self.date , 'time' : self.time, 'description' : self.description}
         url_parts = list(urlparse.urlparse(URL + INVITATION_PATH))
         url_parts[4] = urlencode(params)
         return urlparse.urlunparse(url_parts)
     
     def __str__(self):
-        return 'name:\t' + str(self.name) + "\ndate:\t" + str(self.date) + "\ndescriptions:\t" + str(self.description)  
+        return 'name:\t' + str(self.name) + '\ndate:\t' + str(self.date) + '\ntime:\t' + str(self.time) + '\ndescriptions:\t' + str(self.description)  
        
       
 meetings = []
@@ -38,13 +64,16 @@ def add_meeting():
     description = request.form["description"]
     date = request.form['date']
     time = request.form['time']
-    print(time)
-    m = meeting(name, date, description)
-    print(m)
+    m = meeting(name, date, time, description)
     return redirect(m.get_url())
 
 @app.route('/email', methods = ['POST'])
 def email_stuff():
-    return abort(404)
+    sendTestEmail()
+    return "stuff"
+
+
+
+
     
 
