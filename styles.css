@@ -8,19 +8,20 @@ body{
     text-align: center;
     font-size: 15px;
     color: black;
-    border: none;
-    width: 80px;
-    height: 80px;
+    border-color: black;
+    width: 65px;
+    height: 65px;
 }
 
 .date-button-past {
-    background: rgb(219, 3, 3);
+   
+    background: rgba(79, 95, 168, 0.068);
     text-align: center;
     font-size: 15px;
     color: black;
     border: none;
-    width: 80px;
-    height: 80px;
+    width: 65px;
+    height: 65px;
 }
 
 .tr-weekdays{

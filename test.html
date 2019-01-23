@@ -24,7 +24,7 @@
                     </button>
                     </div>
                     <div class="modal-body">
-                        <form action="http://127.0.0.1:5000/addData" method="POST" role="form" onsubmit="popupAlert()">
+                        <form action="http://127.0.0.1:5500/invitation.html" role="form" >
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control" name="name" placeholder="Enter a name for this metting" required>
@@ -35,7 +35,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="time">Time</label>
-                                <input id="time-input" type="time" class="form-control" name="time" value="">
+                                <input id="time-input" type="time" class="form-control" name="time" value="02:39">
                             </div>
                             <div class="form-group">
                                 <label for="date">Date</label>
@@ -85,6 +85,29 @@
 
        
         </div>
+            <div class="row" style="padding: 20px">
+                <div class="col-4"></div>
+                <div class="col-4 text-center">
+                        <div class="row">
+                                <div class="col-11"> 
+                                        <input id="date-input-main" type="date" class="form-control input-sm" name="date" id="date" value="" required>
+                                </div>
+                                <div class="col-1">
+                                        <button style="background: black;" class=" btn btn-secondary" onclick="changeDate()">Go</button>
+                                </div>
+                        </div>
+
+                        </div>
+                </div>
+                <div class="col-4"></div>
+                    
+            </div>
+               
+        </div>
+        
+
+
+
         <div style="padding: 50px;"class="row">
             <div class="col-6" align="right">
 
@@ -100,10 +123,14 @@
         <!-- <script src="calendardates.js" type="text/javascript"></script> -->
 
         <script>
-            // Enables pop-overs.
             $(function () {
-                $('[data-toggle="popover"]').popover()
+                enbalePopover();
             })
+
+            // Enables pop-overs.
+            function enbalePopover () {
+                $('[data-toggle="popover"]').popover()
+            }
 
 
 
@@ -124,6 +151,8 @@
                 }
                 $('#calendar-body').html(createMonth(new Date(currentYear, currentMonth, 01).getDay(), currentMonth, currentYear), createMonth(currentMonth));
                 $('#month-title').html(FULL_MONTH_NAMES[currentMonth] + ' ' + currentYear);
+
+                enbalePopover();
             }
 
             function prevMonth()  {
@@ -136,6 +165,9 @@
 
                 $('#calendar-body').html(createMonth(new Date(currentYear, currentMonth, 01).getDay(), currentMonth, currentYear), createMonth(currentMonth));
                 $('#month-title').html(FULL_MONTH_NAMES[currentMonth] + ' ' + currentYear);
+
+                enbalePopover();
+
             }
 
             function setUpModal (clickedDate) {
@@ -151,15 +183,38 @@
                 console.log(dateString);
                 hour = date.getHours();
                 mintue = date.getMinutes();
-                console.log(hour,  mintue);
+                strmintue = mintue;
+                strhour = hour;
+                if (parseInt(hour)< 10)  {
+                    strhour = "0" + strhour
+                }
+
+                if (parseInt(mintue) < 10)  {
+                    strmintue = "0" + strmintue  
+                }
                 $("#date-input").attr("value", dateString);
-                $("#time-input").attr("value", hour + ":" + mintue);
+                $("#time-input").attr("value", strhour + ":" + strmintue);
             }
 
         
             $('#calendar-body').append(createMonth(new Date(currentYear, currentMonth, 01).getDay(), currentMonth, currentYear));
             $('#month-title').html(FULL_MONTH_NAMES[currentMonth] + ' ' + currentYear);
             
+            function changeDate() {
+                dateInput = new Date($("#date-input-main").val());
+                if (isNaN(dateInput)) {
+                    alert("Not a valid date.")
+                    return;
+                }
+                currentYear = dateInput.getFullYear();
+                currentMonth = dateInput.getMonth();
+                $('#calendar-body').html(createMonth(new Date(currentYear, currentMonth, 01).getDay(), currentMonth, currentYear));
+                $('#month-title').html(FULL_MONTH_NAMES[currentMonth] + ' ' + currentYear);
+                enbalePopover();
+
+            }            
+
+
             function githubLink()  {
                 var win = window.open("https://github.com/keegandsouza15/MeetingsNow");
                 win.focus();
