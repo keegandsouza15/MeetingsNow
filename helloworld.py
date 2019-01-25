@@ -64,6 +64,8 @@ def add_meeting():
     description = request.form["description"]
     date = request.form['date']
     time = request.form['time']
+    location = request.form['location']
+    print(location)
     m = meeting(name, date, time, description)
     return redirect(m.get_url())
 
