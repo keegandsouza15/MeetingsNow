@@ -16,6 +16,8 @@
         <h2 style="padding: 25px" id="description-text"></h2>
         <h2 style="padding: 25px" id="date-text"></h2>
         <h2 style="padding: 25px" id="time-text"></h2>
+        <h2 style="padding: 25px" id="location-text"></h2>
+        <a id="google-maps-link" target="_blank" hidden=true>Google Maps Link</a>
 
         <div class="row">
             <div class="col-4"></div>
@@ -73,6 +75,16 @@
             var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
             date = new Date(dateString);
             $('#date-text').html(date.toLocaleDateString("en-US", options));
+
+            
+            var meetingPlace = urlParams.get('location');
+            $('#location-text').html(meetingPlace);
+            if (meetingPlace.length > 0)  {
+                $("#google-maps-link").attr("hidden", false);
+                $("#google-maps-link").attr("href", "https://www.google.com/maps/place/" + meetingPlace);
+            }
+
+
             $('#permalink-text').append(window.location.href);
 
             function sendEmail () {

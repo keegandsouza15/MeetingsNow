@@ -35,21 +35,25 @@ class chat:
         return self.posts
 
 class meeting:
-    def __init__(self, name, date, time, description):
+    def __init__(self, name, date, time, location, description):
         self.name = name
         self.date = date
         self.time = time
-        self.place = ""
+        self.location = location
         self.description = description
     
     def get_url(self):
-        params = {'name': self.name, 'date' : self.date , 'time' : self.time, 'description' : self.description}
+        params = {'name': self.name, 'date' : self.date , 'time' : self.time, 'location' : self.location, 'description' :  self.description}
         url_parts = list(urlparse.urlparse(URL + INVITATION_PATH))
         url_parts[4] = urlencode(params)
         return urlparse.urlunparse(url_parts)
     
     def __str__(self):
-        return 'name:\t' + str(self.name) + '\ndate:\t' + str(self.date) + '\ntime:\t' + str(self.time) + '\ndescriptions:\t' + str(self.description)  
+        return 'name:\t' + str(self.name) + \
+               '\ndate:\t' + str(self.date) + \
+               '\ntime:\t' + str(self.time) + \
+               '\nlocation:\t' + str(self.location) + \
+               '\ndescriptions:\t' + str(self.description)  
        
       
 meetings = []
@@ -65,8 +69,7 @@ def add_meeting():
     date = request.form['date']
     time = request.form['time']
     location = request.form['location']
-    print(location)
-    m = meeting(name, date, time, description)
+    m = meeting(name, date, time, location, description)
     return redirect(m.get_url())
 
 @app.route('/email', methods = ['POST'])
