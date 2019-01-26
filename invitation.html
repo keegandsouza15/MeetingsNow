@@ -82,22 +82,53 @@
             }
 
             const urlParams = new URLSearchParams(window.location.search);
-            $('#name-text').html(urlParams.get('name')); 
-            $('#description-text').html(urlParams.get('description'));
-            var time = urlParams.get('time')
-            $('#time-text').html(convertMilitarytoStandard(time));
-            dateString = urlParams.get('date');
-            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            date = new Date(dateString);
-            $('#date-text').html(date.toLocaleDateString("en-US", options));
+            var meetingId = urlParams.get('id');
+            console.log(meetingId);
+            $.ajax ({
+                    url: "http://127.0.0.1:5000/getMeeting",
+                    type: "GET",
+                    data: {id : meetingId},
+                    success: function(result) {
+                         $('#name-text').html(result['name']);
+                         $('#description-text').html(result['description']);
+                         var time = result['time']
+                         $('#time-text').html(convertMilitarytoStandard(time));
+                         dateString = result['date']
+                         var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                         date = new Date(dateString);
+                         $('#date-text').html(date.toLocaleDateString("en-US", options));
+
+
+                        var meetingPlace = result['location']
+                        $('#location-text').html(meetingPlace);
+                        if (meetingPlace.length > 0)  {
+                            $("#google-maps-link").attr("hidden", false);
+                            $("#google-maps-link").attr("href", "https://www.google.com/maps/place/" + meetingPlace);
+                        }
+
+                    },
+                    error: function(xhr, textStatus, errorThrown){
+                        alert("An error occured when sending your email");
+                    }
+                })
+         
+
+            // $('#name-text').html(urlParams.get('name')); 
+            // $('#description-text').html(urlParams.get('description'));
+            // var time = urlParams.get('time')
+            // $('#time-text').html(convertMilitarytoStandard(time));
+            // dateString = urlParams.get('date');
+            // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            // date = new Date(dateString);
+            // $('#date-text').html(date.toLocaleDateString("en-US", options));
 
             
-            var meetingPlace = urlParams.get('location');
-            $('#location-text').html(meetingPlace);
-            if (meetingPlace.length > 0)  {
-                $("#google-maps-link").attr("hidden", false);
-                $("#google-maps-link").attr("href", "https://www.google.com/maps/place/" + meetingPlace);
-            }
+            // var meetingPlace = urlParams.get('location');
+            // $('#location-text').html(meetingPlace);
+            // if (meetingPlace.length > 0)  {
+            //     $("#google-maps-link").attr("hidden", false);
+            //     $("#google-maps-link").attr("href", "https://www.google.com/maps/place/" + meetingPlace);
+            // }
 
             $("#permalink-input").val(window.location.href);
 
