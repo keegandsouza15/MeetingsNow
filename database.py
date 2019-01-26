@@ -1,3 +1,5 @@
+# Python SQLite Database wrapper file.
+
 import sqlite3
 import uuid
 

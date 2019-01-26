@@ -12,28 +12,6 @@ app = Flask(__name__)
 URL = "http://127.0.0.1:5500/"
 INVITATION_PATH = "invitation.html"
 
-
-class post:
-    def __init(self, text):
-        self.text = text
-        self.votes = 0
-
-    def increaseVote(self):
-        self.votes += 1
-    
-    def decreaseVote(self):
-        self.votes -=1 
-
-class chat:
-    def __init__(self):
-        self.posts = []
-    
-    def add_post(self, post):
-        self.posts.append(post)
-
-    def get_ordered_post(self, post):
-        return self.posts
-
 class meeting:
     def __init__(self, name, date, time, location, description):
         self.name = name
