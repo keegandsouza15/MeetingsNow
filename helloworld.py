@@ -74,8 +74,9 @@ def add_meeting():
 
 @app.route('/email', methods = ['POST'])
 def email_stuff():
+    print("Hello There")
     sendTestEmail()
-    return "stuff"
+    return "hello"
 
 
 

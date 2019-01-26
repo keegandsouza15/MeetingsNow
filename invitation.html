@@ -12,14 +12,26 @@
     </head>
 
     <body class="text-center">
-        <h1 style="font-size:100px; padding: 100px" class="display-4" id="name-text"></h1>
-        <h2 style="padding: 25px" id="description-text"></h2>
-        <h2 style="padding: 25px" id="date-text"></h2>
-        <h2 style="padding: 25px" id="time-text"></h2>
-        <h2 style="padding: 25px" id="location-text"></h2>
-        <a id="google-maps-link" target="_blank" hidden=true>Google Maps Link</a>
+       
 
-        <div class="row">
+        <h1 style="font-size:100px; padding: 25px" class="display-4" id="name-text"></h1>
+
+        <div class="invitation-content"></div>
+        <h3 style="padding: 10px" id="description-text"></h2>
+        <h3 style="padding: 10px" id="date-text"></h2>
+        <h3 style="padding: 10px" id="time-text"></h2>
+        
+        <div style="padding: 10px;">
+            <h3 id="location-text"></h2>
+            <a  style="text-decoration: underline; color:black;"id="google-maps-link" target="_blank" hidden=true>Google Maps Link</a>
+        </div>
+        
+        <div style="padding: 10px; position: absolute; bottom: 10px" class="col-12">
+            <button data-toggle="popover" data-trigger="focus" data-content="Copied" style="background: black;" class="btn btn-secondary" onclick="copytoClipBoard()">Copy Sharable Link</button>
+        </div>
+        <input hidden=true type="text" value="shit World" id="permalink-input">
+
+        <!-- <div class="row">
             <div class="col-4"></div>
             <div class="col-4">
                         <div class="row">
@@ -32,17 +44,20 @@
                         </div>
             </div>
             <div class="col-4"></div>
-        </div>
+        </div> -->
 
 
 
-        <p id="permalink-text">Sharable link: </p>
         
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>   
 
         <script>
+             $('[data-toggle="popover"]').popover()
+
+
+            
              function convertMilitarytoStandard(time) {
                 console.log(time)
             
@@ -84,8 +99,10 @@
                 $("#google-maps-link").attr("href", "https://www.google.com/maps/place/" + meetingPlace);
             }
 
+            $("#permalink-input").val(window.location.href);
 
-            $('#permalink-text').append(window.location.href);
+
+
 
             function sendEmail () {
                 emailAddress = $("#email-sender").val();
@@ -93,16 +110,22 @@
                 $.ajax ({
                     url: "http://127.0.0.1:5000/email",
                     type: "POST",
+                    crossDomain: true,
                     success: function(result) {
-                        alert("Your email was sent");
+                        alert(result);
                     },
                     error: function(xhr, textStatus, errorThrown){
-                        alert("Your email was not sent");
+                        alert("An error occured when sending your email");
                     }
                 })
+            }
 
-           
-                
+            function copytoClipBoard() {
+                var copyText = document.getElementById("permalink-input");
+                document.getElementById("permalink-input").hidden = false;
+                copyText.select();
+                document.execCommand("copy");
+                document.getElementById("permalink-input").hidden = true;
             }
 
         </script>

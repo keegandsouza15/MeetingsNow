@@ -20,6 +20,15 @@
             ],
             "jinja": true
         },
+
+        {
+            "name": "Python: Current File (Integrated Terminal)",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "stopOnEntry": true
+        },
         
     ]
 }
