@@ -1,1 +1,6 @@
 "sendgrid.env" 
+"__pycache__"
+"venv"
+".idea"
+".vscode"
+"mydb.db"
