@@ -1,0 +1,6 @@
+{
+    "DEBUG" : {
+        "flaskPort": 5000,
+        "flaskHost": "localhost"
+    }
+}

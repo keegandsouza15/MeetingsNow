@@ -40,7 +40,7 @@
                         </div>
 
                         <div class="modal-body">
-                            <form action="http://127.0.0.1:5000/addData" method="POST" role="form" >
+                            <form id=meeting-form action="http://127.0.0.1:5000/addData" method="POST" role="form" >
                                 <div class="form-group">
                                     <label for="name">Name</label>
                                     <input type="text" class="form-control" name="name" placeholder="Enter a name for this meeting" required>
@@ -140,15 +140,13 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>   
 
         <script>
-            $(function () {
-                enbalePopover();
-            })
+            var FLASKPORT = 5000;
+            var FLASKHOST = 'localhost';
+            var FLASKURL = 'http://' + FLASKHOST + ':' + FLASKPORT;
 
-            // Enables pop-overs.
-            function enbalePopover () {
-                $('[data-toggle="popover"]').popover()
-            }
 
+           
+           
 
 
             var MONTH_DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -228,11 +226,6 @@
                 $("#time-input").attr("value", strhour + ":" + strmintue);
             }
 
-        
-            $('#calendar-body').append(createMonth(new Date(currentYear, currentMonth, 01).getDay(), currentMonth, currentYear));
-            $('#month-title').html(FULL_MONTH_NAMES[currentMonth] + ' ' + currentYear);
-            
-           
             function createDays(numDays)  {
                 pastDays = 0
                 today = new Date();
@@ -250,7 +243,6 @@
                     pastDays = numDays + 1;
                 }
 
-                console.log("Past Days", pastDays);
                 tdList = []
                 for (var i = 1; i < numDays + 1; i++) {
                     var td = document.createElement('td');
@@ -314,11 +306,27 @@
                 return rows;
             }
             
-            
+             // Enables pop-overs.
+             function enbalePopover () {
+                $('[data-toggle="popover"]').popover()
+            }
+
+
             function githubLink()  {
                 var win = window.open("https://github.com/keegandsouza15/MeetingsNow");
                 win.focus();
             }
+
+            $(function () {
+                // Sets the form to post to the correct URL
+                $('#meeting-form').attr("action", FLASKURL + '/addData');
+
+                $('#calendar-body').append(createMonth(new Date(currentYear, currentMonth, 01).getDay(), currentMonth, currentYear));
+                $('#month-title').html(FULL_MONTH_NAMES[currentMonth] + ' ' + currentYear);
+
+                enbalePopover();
+            })
+
 
         </script>
 
