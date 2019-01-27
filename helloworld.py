@@ -62,7 +62,7 @@ def add_meeting():
     location = request.form['location']
     #m = meeting(name, date, time, location, description)
     id = database.insert_meeting(name, date, time, location, description)
-    
+    database.insert_chat(id)
     return redirect(get_url_for_id(id))
 
 @app.route('/getMeeting' , methods = ['GET'])
@@ -78,6 +78,21 @@ def get_meeting():
     meeting_data['description'] = meeting_tuple[5]
     return jsonify(meeting_data)
 
+@app.route('/getComments', methods = ['GET'])
+def get_comments():
+    meeting_id = request.args["id"]
+    chat_id = database.get_chat_id(meeting_id)
+    comments_tuple = database.get_all_comments(chat_id)
+    return jsonify(comments_tuple)
+
+
+@app.route('/insertComment', methods = ['POST'])
+def insert_comment():
+    meeting_id = request.form["id"]
+    comment = request.form["comment"]
+    chat_id = database.get_chat_id(meeting_id)
+    database.insert_comment(chat_id,comment)
+    return "your comment was inserted"
 
 
 @app.route('/email', methods = ['POST'])

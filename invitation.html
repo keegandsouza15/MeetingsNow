@@ -25,8 +25,15 @@
             <h3 id="location-text"></h2>
             <a  style="text-decoration: underline; color:black;"id="google-maps-link" target="_blank" hidden=true>Google Maps Link</a>
         </div>
+
+        <div id="comments-section">
+            <h3 style="padding: 10px">Comments Section</h2>
+            <input required=true id="comment-input" type="text" class="form-control" placeholder="Make a comment about this meeting"></input>
+            <button type="button" onclick="sumbitComment()" class="btn btn-primary">Sumbit</button>
+            <div style="padding: 0px" id="comment-list"></div>
+        </div>
         
-        <div style="padding: 10px; position: absolute; bottom: 10px" class="col-12">
+        <div style="padding: 10px;" class="col-12">
             <button data-toggle="popover" data-trigger="focus" data-content="Copied" style="background: black;" class="btn btn-secondary" onclick="copytoClipBoard()">Copy Sharable Link</button>
         </div>
         <input hidden=true type="text" value="shit World" id="permalink-input">
@@ -111,27 +118,43 @@
                         alert("An error occured when sending your email");
                     }
                 })
-         
-
-            // $('#name-text').html(urlParams.get('name')); 
-            // $('#description-text').html(urlParams.get('description'));
-            // var time = urlParams.get('time')
-            // $('#time-text').html(convertMilitarytoStandard(time));
-            // dateString = urlParams.get('date');
-            // var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            // date = new Date(dateString);
-            // $('#date-text').html(date.toLocaleDateString("en-US", options));
-
+            function refershComments() {
+                $.ajax({
+                url: "http://127.0.0.1:5000/getComments",
+                type: "GET",
+                data : {id : meetingId}, 
+                success: function (result){
+                    var comment_list = $("#comment-list");
+                    comment_list.html("");
+                    for (var item in result){
+                        comment_paragraph = document.createElement('p');
+                        comment_paragraph.innerHTML = result[item]
+                        comment_list.append(comment_paragraph);
+                        }
+                        $('#comment-section').html(comment_list);
+                   }
+                   
+                });
+            }
+                
             
-            // var meetingPlace = urlParams.get('location');
-            // $('#location-text').html(meetingPlace);
-            // if (meetingPlace.length > 0)  {
-            //     $("#google-maps-link").attr("hidden", false);
-            //     $("#google-maps-link").attr("href", "https://www.google.com/maps/place/" + meetingPlace);
-            // }
 
+          
             $("#permalink-input").val(window.location.href);
 
+            function sumbitComment(){
+               comment = $('#comment-input').val();
+               $.ajax({
+                   url: "http://127.0.0.1:5000/insertComment",
+                   type: "POST",
+                   data: {id : meetingId, comment : comment},
+                   success: function () {
+                       refershComments();
+                   }
+               })
+            
+           }
+           refershComments();
 
 
 
