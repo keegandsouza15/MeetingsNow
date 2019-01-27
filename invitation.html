@@ -26,15 +26,21 @@
         </div>
         <h3 style="padding: 10px" id="time-text"></h2>
 
-        <div id="comments-section">
-            <h3 style="padding: 10px">Comments Section</h2>
-            <input required=true id="comment-input" type="text" class="form-control" placeholder="Make a comment about this meeting"></input>
-            <button type="button" onclick="sumbitComment()" class="btn btn-primary">Sumbit</button>
-            <div style="padding: 0px" id="comment-list"></div>
+        <div class="row">
+            <div class="col-4"></div>
+            <div id="comments-section" class="col-4">
+                <h3 style="padding: 10px">Comments Section</h2>
+                <input required id="comment-input" type="text" class="form-control" placeholder="Make a comment about this meeting"></input>
+                <button type="button" onclick="sumbitComment()" class="btn btn-primary" style="background:black; margin:5px">Sumbit</button>
+                <div class="pre-scrollable" style="padding: 10px; height: 200px;" id="comment-list"></div>
+            <div>
+            <div class="col-4"></div>
         </div>
+
+    
         
-        <div style="padding: 10px; position: absolute; bottom:10px" class="col-12">
-            <button data-toggle="popover" data-trigger="focus" data-content="Copied" style="background: black;" class="btn btn-secondary" onclick="copytoClipBoard()">Copy Sharable Link</button>
+        <div style="position:relative; margin-top: 100px" class="col-12">
+            <button  data-toggle="popover" data-trigger="focus" data-content="Copied" style="background: black;" class="btn btn-secondary" onclick="copytoClipBoard()">Copy Sharable Link</button>
         </div>
         <input hidden=true type="text" value="shit World" id="permalink-input">
 
@@ -68,7 +74,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             var meetingId = urlParams.get('id');
 
-           
+
 
             function getMeetingData () {
                 $.ajax ({
@@ -107,9 +113,10 @@
                 success: function (result){
                     var comment_list = $("#comment-list");
                     comment_list.html("");
-                    for (var item in result){
+                    console.log(result.length);
+                    for (var i = result.length - 1; i > -1; i--){
                         comment_paragraph = document.createElement('p');
-                        comment_paragraph.innerHTML = result[item]
+                        comment_paragraph.innerHTML = result[i]
                         comment_list.append(comment_paragraph);
                         }
                         $('#comment-section').html(comment_list);
@@ -120,6 +127,9 @@
 
             function sumbitComment(){
                comment = $('#comment-input').val();
+               if (comment.length === 0)  {
+                   return;
+               }
                $.ajax({
                    url: FLASKURL + "/insertComment",
                    type: "POST",
