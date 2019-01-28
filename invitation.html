@@ -7,42 +7,46 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="styles.css">
 
-        <title>Hello World</title>
+        <title>Metting</title>
         
     </head>
 
-    <body class="text-center">
+    <body>
+
+        <div class="container-fuild" >
+            <div class="row justify-content-center ">
+                        <div class="col-4 text-center">
+                                <h1 style="font-size:100px; padding: 25px" class="display-4" id="name-text"></h1>
+                                <div class="invitation-content"></div>
+                                    <h3 style="padding: 10px" id="description-text"></h2>
+                                    <h3 style="padding: 10px" id="date-text"></h2>
+                                    <div style="padding: 10px;">
+                                            <h3 id="location-text"></h2>
+                                            <a  style="text-decoration: underline; color:black;"id="google-maps-link" target="_blank" hidden=true>Google Maps Link</a>
+                                    </div>
+                                    <h3 style="padding: 10px" id="time-text"></h2>
+                                    <button  data-toggle="popover" data-trigger="focus" data-content="Copied" style="background: black;" class="btn btn-secondary" onclick="copytoClipBoard()">Copy Sharable Link</button>
+                                    <input hidden=true type="text" value="shit World" id="permalink-input">
+                                    <div id="comments-section">
+                                        <h3 style="padding: 10px">Comments Section</h2>
+                                        <input id="comment-input" type="text" class="form-control" placeholder="Make a comment about this meeting"></input>
+                                        <div class="pre-scrollable" style="padding: 10px; " id="comment-list"></div>
+                                        <button type="button" onclick="sumbitComment()" class="btn btn-primary" style="background:black; margin:5px">Sumbit</button>
+                                    </div>
+                        </div>
+            </div>
+                  
+          
        
 
-        <h1 style="font-size:100px; padding: 25px" class="display-4" id="name-text"></h1>
 
-        <div class="invitation-content"></div>
-        <h3 style="padding: 10px" id="description-text"></h2>
-        <h3 style="padding: 10px" id="date-text"></h2>
+       
+
         
-        <div style="padding: 10px;">
-            <h3 id="location-text"></h2>
-            <a  style="text-decoration: underline; color:black;"id="google-maps-link" target="_blank" hidden=true>Google Maps Link</a>
-        </div>
-        <h3 style="padding: 10px" id="time-text"></h2>
-
-        <div class="row">
-            <div class="col-4"></div>
-            <div id="comments-section" class="col-4">
-                <h3 style="padding: 10px">Comments Section</h2>
-                <input required id="comment-input" type="text" class="form-control" placeholder="Make a comment about this meeting"></input>
-                <button type="button" onclick="sumbitComment()" class="btn btn-primary" style="background:black; margin:5px">Sumbit</button>
-                <div class="pre-scrollable" style="padding: 10px; height: 200px;" id="comment-list"></div>
-            <div>
-            <div class="col-4"></div>
-        </div>
 
     
         
-        <div style="position:relative; margin-top: 100px" class="col-12">
-            <button  data-toggle="popover" data-trigger="focus" data-content="Copied" style="background: black;" class="btn btn-secondary" onclick="copytoClipBoard()">Copy Sharable Link</button>
-        </div>
-        <input hidden=true type="text" value="shit World" id="permalink-input">
+        
 
         <!-- <div class="row">
             <div class="col-4"></div>
@@ -99,9 +103,7 @@
                             $("#google-maps-link").attr("href", "https://www.google.com/maps/place/" + meetingPlace);
                         }
                     },
-                    error: function(xhr, textStatus, errorThrown){
-                        alert("An error occured when sending your email");
-                    }
+                    
                  });
             }
            

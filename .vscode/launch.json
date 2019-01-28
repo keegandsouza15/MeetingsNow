@@ -11,7 +11,7 @@
             "request": "launch",
             "module": "flask",
             "env": {
-                "FLASK_APP": "helloworld.py"
+                "FLASK_APP": "endpoint.py"
             },
             "args": [
                 "run",
